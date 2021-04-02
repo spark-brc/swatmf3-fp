@@ -40,7 +40,7 @@
       type (grid_dhru_mapping), dimension(:), allocatable  :: g2d_map
 
       !Specific Yield variables
-      real, dimension (:,:,:), allocatable :: mf_SC2
+      real, dimension (:,:,:), allocatable :: mf_SC2,mf_SC1
       integer :: mf_NTOP
       
       !Variables for irrigation: MODFLOW Well package supplies irrigation water to SWAT HRUs, or vice versa
@@ -133,5 +133,8 @@
 
       !flag for printing the subbasin area in km2
       integer :: area_print
+      
+      !arrays for subbasin groundwater output (for output.sub file)
+      real, dimension (:), allocatable :: sub_gw_output
 
       end module smrt_parm

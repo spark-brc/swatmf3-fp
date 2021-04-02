@@ -150,11 +150,7 @@
           vmm = min(vmm,irr_mx(j))
           call irrigate(j,vmm)
 
-           !if (hru_sub(j)==63.and.hru_seq(j)==1) then
-			!write (*, "(a5,1x,a4,i6,1x,7f10.2)") subnum(j), hruno(j),
-   !  *		  iida, sol_sw(j), aird(j)
-          !end if
-         !write out summary for HRU
+          !write out summary for HRU
           if (imgt == 1) then
             write (143, 1000) subnum(j), hruno(j), iyr, i_mo, iida, 
      *       hru_km(j), "         ",  " AUTOIRR", phubase(j), phuacc(j)

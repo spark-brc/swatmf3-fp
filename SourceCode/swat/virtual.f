@@ -258,6 +258,7 @@
 !!    ~ ~ ~ ~ ~ ~ END SPECIFICATIONS ~ ~ ~ ~ ~ ~
 
       use parm
+      use smrt_parm, only: mf_active,sub_gw_output
 
       integer :: j, sb, kk, ii
       real :: cnv, sub_ha, wtmp, baseflw, bf_fr,hr
@@ -645,7 +646,11 @@
          submono(9,sb) = submono(9,sb) + sub_yorgp(sb)
          submono(10,sb) = submono(10,sb) + sub_no3(sb)
          submono(11,sb) = submono(11,sb) + sub_solp(sb)
-         submono(12,sb) = submono(12,sb) + sub_gwq(sb)
+         if(mf_active.eq.1) then
+           submono(12,sb) = submono(12,sb) + sub_gw_output(sb)
+         else
+           submono(12,sb) = submono(12,sb) + sub_gwq(sb)
+         endif
          submono(13,sb) = submono(13,sb) + sub_sep(sb)
          submono(14,sb) = submono(14,sb) + sub_sedpa(sb) + sub_sedps(sb)
          submono(15,sb) = submono(15,sb) + sub_latq(sb)

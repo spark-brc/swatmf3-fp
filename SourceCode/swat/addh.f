@@ -44,13 +44,7 @@
       do ii = 1, mvaro
         varoute(ii,ihout) = 0.
       end do
-      
-      if(varoute(2,inum2)<0.) then !water transfer amount is forced to less than the current channel storage. Jaehak 2020
-         if (varoute(2,inum1)+varoute(2,inum2)<0.) then
-            varoute(2,inum2) = -varoute(2,inum1)       
-         endif
-      endif
-      
+
 !! add loadings and store in new hydrograph location
       if (varoute(2,inum1) + varoute(2,inum2) > 0.1) then
       varoute(1,ihout) = (varoute(1,inum1) * varoute(2,inum1) +         

@@ -87,7 +87,6 @@
       use smrt_parm !rtb modflow
 
       !!initialize variables at beginning of day
-       fpinf = 0.
       cbodu = 0.
       chl_a = 0.
       cnday = 0.
@@ -250,10 +249,6 @@
 	sub_rspc_d =0.
       !!add by zhang
       !!==========================
-	
-      !rtb modflow
-      !perc_no3_conc = 0.
-      !perc_p_conc = 0.
 
       return
       end

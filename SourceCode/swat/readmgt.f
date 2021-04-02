@@ -447,9 +447,7 @@
           mgt6 = 0
           mgt7 = 0.
           mgt8 = 0.
-  5200 format (1x,i2,1x,i2,1x,f8.3,1x,i2,1x,i4,1x,i3,i3,1x,f12.5,1x,  
-     &        f6.2,1x,f11.5,1x,f4.2,1x,f6.2,1x,f5.2,i12)
-         mgt9 = 0.
+          mgt9 = 0.
           read (109,5200,iostat=eof) mon, day, husc, mgt_op, mgt1i,     
      &          mgt2i, mgt3i, mgt4, mgt5, mgt6, mgt7, mgt8, mgt9, mgt10i
           if (eof < 0) then
@@ -502,9 +500,13 @@
             auto_yes = 1
             if (mgt2i <= 0) then
               mgt2i = irrsc(ihru)
+		  else
+              irrsc(ihru) = mgt2i 
             endif
-            if (mgt10i <= 0) then
-              mgt10i = irrno(ihru)
+            if (mgt3i <= 0) then
+              mgt3i = irrno(ihru)
+		  else
+              irrno(ihru) = mgt3i  
             endif
          endif
  !! above added 
@@ -528,7 +530,7 @@
           mgt7op(iop,ihru) = mgt7
           mgt8op(iop,ihru) = mgt8
           mgt9op(iop,ihru) = mgt9
-          mgt10iop(iop,ihru) = mgt3i !mgt10i
+          mgt10iop(iop,ihru) = mgt10i
           if (mgt_op == 1) then
             idplt(ihru) = mgt1i
             icrmx(ihru) = icrmx(ihru) + 1
@@ -623,6 +625,6 @@
 
       return
  5000 format (a)
- 5200 format (1x,i2,1x,i2,1x,f8.3,1x,i2,1x,i4,1x,i3,i3,1x,f12.5,1x,  
+ 5200 format (1x,i2,1x,i2,1x,f8.3,1x,i2,1x,i4,1x,i3,1x,i2,1x,f12.5,1x,  
      &        f6.2,1x,f11.5,1x,f4.2,1x,f6.2,1x,f5.2,i12)
       end

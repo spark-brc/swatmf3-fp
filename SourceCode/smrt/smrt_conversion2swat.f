@@ -91,6 +91,7 @@
       use GWFSTRMODULE, only:STRM !MODFLOW Stream Package
       use GWFEVTMODULE, only:EVTvol
       use GWFBASMODULE, only:VBVL
+      use GWFUPWMODULE, only:LAYTYPUPW
       use mf_rt_link, only: rt_active,rt_rivmass,rt_drnmass !MODFLOW-RT3D Linkage
       use rt_global, only: CNEW !RT3D
       use smrt_parm !smrt linkage
@@ -111,7 +112,8 @@
      &     sub_gw_sw_no3,sub_sw_gw_no3,sub_drn_sw_no3,
      &     sub_gw_sw_p,sub_sw_gw_p,sub_drn_sw_p,
      &     thickness,cell_area,
-     &     cell_gw_volume,aquifer_gw_volume,sy,aquifer_gw_m,hru_gw
+     &     cell_gw_volume,aquifer_gw_volume,sy,aquifer_gw_m,hru_gw,
+     &     storativity,spec_storage
       real grams_N, Ntot
       real wtlocation(NCOL,NROW)
       real sum_rivrate(1)
@@ -455,6 +457,7 @@
       !rtb drain
 
       !calculate gw_q, sw_gw, and drn_q
+      sub_gw_output = 0.
       do j=1,msub
         
         sub_gw_sw = sub_gw(j)
@@ -473,6 +476,9 @@
         sub_str_sw = sub_str_sw / (sub_km(j) * 1000000.) !m of water
         sub_str_sw = sub_str_sw * 1000. !mm of water
 
+        !store for output.sub output
+        sub_gw_output(j) = sub_gw_sw !mm of water over the subbasin
+        
         !change to kg/ha
         sub_gw_sw_no3 = sub_gw_sw_no3 / sub_km(j) !kg/km2
         sub_gw_sw_no3 = sub_gw_sw_no3 / 100. !kg/ha
@@ -584,12 +590,18 @@
               endif
             endif
             cell_area = DELR(j) * DELC(i)
-            if(IUNIT(23).gt.0 .or. IUNIT(1).gt.0) then
-              sy = mf_SC2(j,i,k) / cell_area !specific yield from cell storage capacity
-            else
-              sy = SC2UPW(j,i,k) / cell_area !specific yield from cell storage capacity
+            if(LAYTYPUPW(k).eq.0) then !confined aquifer
+              spec_storage = mf_SC1(j,i,k) / cell_area
+              storativity = spec_storage * thickness
+              cell_gw_volume = thickness * cell_area * storativity
+            else !unconfined aquifer
+              if(IUNIT(23).gt.0 .or. IUNIT(1).gt.0) then
+                sy = mf_SC2(j,i,k) / cell_area !specific yield from cell storage capacity
+              else
+                sy = SC2UPW(j,i,k) / cell_area !specific yield from cell storage capacity
+              endif
+              cell_gw_volume = thickness * cell_area * sy
             endif
-            cell_gw_volume = thickness * cell_area * sy
             gw_available(j,i,k) = cell_gw_volume !save for SWAT auto-irrigation (see irrigate.f)
             aquifer_gw_volume = aquifer_gw_volume + cell_gw_volume
             endif

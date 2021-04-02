@@ -220,6 +220,7 @@
             irr_asq(j) = mgt7op(nop(j),j)
             irr_sca(j) = mgt2iop(nop(j),j)
             irr_noa(j) = mgt3iop(nop(j),j)
+            ! if (irr_noa(j) <= 0) irr_noa(j) = irrno(j) !spark: commented out? because of duplication
             if (irr_noa(j) <= 0) irr_noa(j) = irrno(j)
             if (irr_noa(j) <= 0) irr_noa(j) = hru_sub(j)
             if (wstrs_id(j) <= 0) wstrs_id(j) = 1     

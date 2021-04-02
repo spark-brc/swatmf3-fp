@@ -56,6 +56,7 @@
 !!    ~ ~ ~ ~ ~ ~ END SPECIFICATIONS ~ ~ ~ ~ ~ ~
 
       use parm
+      use smrt_parm, only: mf_active,sub_gw_output
 
       integer :: sb, ii
       real :: sub_ha
@@ -77,7 +78,11 @@
       pdvab(5) = sub_sw(sb)
       pdvab(6) = sub_sep(sb)
       pdvab(7) = sub_qd(sb)
-      pdvab(8) = sub_gwq(sb) 
+      if(mf_active.eq.1) then
+        pdvab(8) = sub_gw_output(sb) !rtb modflow
+      else
+        pdvab(8) = sub_gwq(sb) 
+      endif
       pdvab(9) = sub_wyld(sb)
       pdvab(10) = sub_sedy(sb)/ sub_ha
       pdvab(11) = sub_yorgn(sb)
@@ -125,7 +130,7 @@
 !     changed for jennifer b.
 !1000 format ('BIGSUB',i4,1x,i8,1x,i4,e10.5,18f10.3)
 !1000 format ('BIGSUB',i4,1x,i8,1x,i4,e10.5,21f10.3)
- 1000 format ('BIGSUB',i4,1x,i8,1x,i4,e10.5,18e10.3,1x,e10.5,3e10.3,i6)
- 1001 format('BIGSUB',i4,1x,i8,1x,i2,1x,i2,1x,i4,1x,e10.5,18e10.3,1x,   
+ 1000 format ('BIGSUB',i4,1x,i8,1x,i4,e10.5,18e14.3,1x,e10.5,3e10.3,i6)
+ 1001 format('BIGSUB',i4,1x,i8,1x,i2,1x,i2,1x,i4,1x,e10.5,18e14.3,1x,   
      &  e10.5, 3e10.3,i6)
       end 

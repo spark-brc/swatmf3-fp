@@ -154,11 +154,8 @@
               else
                 call irrigate(k,vmm)
               end if
+              
               irramt(k) = vmm
-			!if(jres==24)write(*,*)iida,jres,hruno(k),vmm
-     !!        write (*, 1001) subnum(k), hruno(k), iyr, i_mo, iida, 
-     !!*        phubase(k), phuacc(k),sol_sw(k), aird(k), irrsc(k), 
-     !!*		   irrno(k)
             if (imgt == 1) then
              write (143, 1000) subnum(k), hruno(k), iyr, i_mo, iida, 
      *       hru_km(j), "         ",  " AUTOIRR", phubase(k), phuacc(k),
@@ -166,7 +163,6 @@
      *      sol_sumsolp(k), aird(k), irrsc(k), irrno(k)
 1000        format (a5,1x,a4,3i6,1x,e10.5,1x,2a15,7f10.2,10x,f10.2,70x,
      *       i10,10x,i10) 
-1001        format (a5,1x,a4,3i6,1x,4f10.2,2i10) 
             end if
               !! subtract irrigation from reservoir volume
          !!     if (ipot(k) /= k) then

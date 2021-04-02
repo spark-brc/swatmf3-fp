@@ -1,9 +1,6 @@
       subroutine smrt_allocate()
-!!    ~ ~ ~ Author ~ ~ ~
-!!    Tyler Wible, Masters student
-!!    Colorado State University 2012-2014
-!!    Comment initials "tcw"
-!!
+
+      
 !!    ~ ~ ~ PURPOSE ~ ~ ~
 !!    this subroutine allocates array sizes for variables used in the linkage between SWAT, MODFLOW, and RT3D
 
@@ -169,5 +166,8 @@
       allocate(gw_available(ncol,nrow,nlay))
       gw_available = 0.
 
+      allocate(sub_gw_output(msub))
+      sub_gw_output = 0.
+      
       return
       end
